@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import TableFilter from '@/components/tableFilterSearch';
+import AddBattery from '@/components/AddBattery';
 import { GetParams, ResponseData} from '@/interfaces/batteryInterface';
 
 const Home = () => {
@@ -33,10 +34,11 @@ const Home = () => {
     <div>
       <h1 className='block text-center font-bold text-lg p-4'>Battery Hub</h1>
       
-      <div className="mb-8 px-40">
+      <div className="mb-8 px-40 flex justify-between">
         <TableFilter onFilter={handleFilter} />
+        <AddBattery  onFilter={handleFilter} />
       </div>
-      
+
       { showTableData && (
       <div className="mb-8 px-40">
         <table className="min-w-full border rounded-lg overflow-hidden">
