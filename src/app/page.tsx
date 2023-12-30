@@ -1,39 +1,43 @@
+"use client";
+
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import TableFilter from '@/components/tableFilterSearch';
+import { GetParams, ResponseData} from '@/interfaces/batteryInterface';
 
-interface GetParams {
-  pc_start?: number;
-  pc_end?: number;
-  gte_cap?: number;
-  lte_cap?: number;
-  search?: string;
-};
+const Home = () => {
+  const [powerHubData, setPowerHubData] = useState<ResponseData | undefined>(undefined);
 
-interface ResponseData {
-  batteries: {
-    _id: string;
-    name: string;
-    capacity: number;
-    postalCode: number;
-    __v: number;
-    createdAt: string;
-    updatedAt: string;
-  }[];
-  totalWattCapacity: number;
-  averageWattCapacity: number;
-}
+  useEffect(() => {
+    fetchData({});
+  }, []);
 
-export default async function Home() {
-  const response = await fetchData({
-    search: 'BB'
-  });
+  const fetchData = async (params: GetParams) => {
+    try {
+      const response = await axios.get('http://localhost:5001/batteries',{params});
+      setPowerHubData(response?.data);
+  
+    } catch (err) {
+  
+    }
+  };
 
-  const powerHubData: ResponseData | undefined = response?.data; 
+  const handleFilter = async (filterParams?: GetParams) => {
+    await fetchData(filterParams || {});
+  };
+
+  
+  const showTableData = powerHubData && powerHubData.batteries.length > 0;
 
   return (
     <div>
       <h1 className='block text-center font-bold text-lg p-4'>Battery Hub</h1>
-
-      {powerHubData && powerHubData.batteries.length > 0 && (
+      
+      <div className="mb-8 px-40">
+        <TableFilter onFilter={handleFilter} />
+      </div>
+      
+      { showTableData && (
       <div className="mb-8 px-40">
         <table className="min-w-full border rounded-lg overflow-hidden">
           <thead className="bg-gray-800 text-white">
@@ -62,16 +66,7 @@ export default async function Home() {
   );
 }
 
-const fetchData = async (params: GetParams) => {
-  try {
-    const response = await axios.get('http://localhost:5001/batteries',{params});
-    return response;
-  } catch (err) {
-
-  }
-
-};
-
+export default Home;
 
 // "use client";
 
