@@ -5,6 +5,7 @@ import axios from 'axios';
 import TableFilter from '@/components/tableFilterSearch';
 import AddBattery from '@/components/AddBattery';
 import { GetParams, ResponseData} from '@/interfaces/batteryInterface';
+import CapBarChart from '@/components/CapBarChart';
 
 const Home = () => {
   const [powerHubData, setPowerHubData] = useState<ResponseData | undefined>(undefined);
@@ -30,6 +31,15 @@ const Home = () => {
   
   const showTableData = powerHubData && powerHubData.batteries.length > 0;
 
+  let stats: {total: number; average: number} | null = null;
+
+  if (showTableData) {
+    stats = {
+      total: powerHubData.totalWattCapacity,
+      average: powerHubData.averageWattCapacity
+    }
+  }
+
   return (
     <div>
       <h1 className='block text-center font-bold text-lg p-4'>Battery Hub</h1>
@@ -40,30 +50,32 @@ const Home = () => {
       </div>
 
       { showTableData && (
-      <div className="mb-8 px-40">
-        <table className="min-w-full border rounded-lg overflow-hidden">
-          <thead className="bg-gray-800 text-white">
-            <tr>
-              <th className="py-2 px-4 text-left">Name</th>
-              <th className="py-2 px-4 text-left">Postal Code</th>
-              <th className="py-2 px-4 text-left">Watt Capacity</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {powerHubData.batteries.map((battery) => (
-              <tr key={battery._id} className="bg-gray-100">
-                <td className="py-2 px-4 text-left">{battery.name}</td>
-                <td className="py-2 px-4 text-left">{battery.postalCode}</td>
-                <td className="py-2 px-4 text-left">{battery.capacity}W</td>
+        <div className="mb-8 px-40">
+          <table className="min-w-full border rounded-lg overflow-hidden">
+            <thead className="bg-gray-800 text-white">
+              <tr>
+                <th className="py-2 px-4 text-left">Name</th>
+                <th className="py-2 px-4 text-left">Postal Code</th>
+                <th className="py-2 px-4 text-left">Watt Capacity</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )}
+            </thead>
 
-      <p></p>
+            <tbody>
+              {powerHubData.batteries.map((battery) => (
+                <tr key={battery._id} className="bg-gray-100">
+                  <td className="py-2 px-4 text-left">{battery.name}</td>
+                  <td className="py-2 px-4 text-left">{battery.postalCode}</td>
+                  <td className="py-2 px-4 text-left">{battery.capacity}W</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {stats && <div className='px-40 flex justify-end'>
+        <CapBarChart stats={stats} />
+      </div>}
     </div>
   );
 }
