@@ -28,7 +28,7 @@ const CapBarChart:React.FC<CapBarChartProps> = ({stats}) => {
     return (
         <BarChart width={200} height={200} data={data}>
             <Tooltip />
-            <Bar dataKey="value" fill="#8884d8" />
+            <Bar dataKey="value" fill="#8884d8" unit="W" />
             <XAxis dataKey="name" tick={false} />
             <YAxis />
         </BarChart>
