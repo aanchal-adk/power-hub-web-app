@@ -73,102 +73,14 @@ const Home = () => {
         </div>
       )}
 
-      {stats && <div className='px-40 flex justify-end'>
-        <CapBarChart stats={stats} />
+      {stats && <div className='mb-8 px-40'>
+        <div className='inline-block px-10 py-10 rounded-md bg-slate-600 bg-opacity-10'>
+          <h2 className='font-bold text-lg mb-4'>Statistics for Battery Capacity</h2>
+          <CapBarChart stats={stats} />
+        </div>
       </div>}
     </div>
   );
 }
 
 export default Home;
-
-// "use client";
-
-// import { useState } from 'react';
-// import axios from 'axios';
-
-// export default function Home() {
-//   const [name, setName] = useState('');
-//   const [postcode, setPostcode] = useState('');
-//   const [wattCapacity, setWattCapacity] = useState('');
-
-//   const [startPostcode, setStartPostcode] = useState('');
-//   const [endPostcode, setEndPostcode] = useState('');
-//   const [filter, setFilter] = useState('');
-
-//   const [batteries, setBatteries] = useState([]);
-//   const [totalWattCapacity, setTotalWattCapacity] = useState(0);
-//   const [averageWattCapacity, setAverageWattCapacity] = useState(0);
-
-//   const addBattery = async () => {
-//     try {
-//       await axios.post('/api/batteries', {
-//         name,
-//         postcode,
-//         wattCapacity: parseInt(wattCapacity),
-//       });
-//       alert('Battery added successfully');
-//       setName('');
-//       setPostcode('');
-//       setWattCapacity('');
-//     } catch (error) {
-//       console.error(error);
-//       alert('Error adding battery');
-//     }
-//   };
-
-//   const searchBatteries = async () => {
-//     try {
-//       const response = await axios.get('/api/batteries', {
-//         params: { start: startPostcode, end: endPostcode, filter },
-//       });
-//       setBatteries(response.data.batteries);
-//       setTotalWattCapacity(response.data.totalWattCapacity);
-//       setAverageWattCapacity(response.data.averageWattCapacity);
-//     } catch (error) {
-//       console.error(error);
-//       alert('Error fetching batteries');
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h1>Virtual Power Plant</h1>
-
-//       <div>
-//         <h2>Add Battery</h2>
-//         <label>Name:</label>
-//         <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-//         <label>Postcode:</label>
-//         <input type="text" value={postcode} onChange={(e) => setPostcode(e.target.value)} />
-//         <label>Watt Capacity:</label>
-//         <input type="text" value={wattCapacity} onChange={(e) => setWattCapacity(e.target.value)} />
-//         <button onClick={addBattery}>Add Battery</button>
-//       </div>
-
-//       <div>
-//         <h2>Search Batteries</h2>
-//         <label>Start Postcode:</label>
-//         <input type="text" value={startPostcode} onChange={(e) => setStartPostcode(e.target.value)} />
-//         <label>End Postcode:</label>
-//         <input type="text" value={endPostcode} onChange={(e) => setEndPostcode(e.target.value)} />
-//         <label>Filter:</label>
-//         <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)} />
-//         <button onClick={searchBatteries}>Search Batteries</button>
-//       </div>
-
-//       <div>
-//         <h2>Battery List</h2>
-//         <p>Total Watt Capacity: {totalWattCapacity}</p>
-//         <p>Average Watt Capacity: {averageWattCapacity}</p>
-//         <ul>
-//           {batteries.map((battery) => (
-//             <li key={battery._id}>
-//               {battery.name} - {battery.postalCode} - {battery.capacity}W
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     </div>
-//   );
-// }
