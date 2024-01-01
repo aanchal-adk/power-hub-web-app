@@ -65,7 +65,6 @@ const TableFilter: React.FC<TableFilterProps> = ({onFilter}) => {
     };
 
     useEffect(() => {
-        console.log("searchQuery: ", searchQuery);
         let timer = setTimeout(() => {
             handleFilter();
         }, 1500);
@@ -74,7 +73,6 @@ const TableFilter: React.FC<TableFilterProps> = ({onFilter}) => {
     }, [searchQuery]);
 
     const handleSearch = (keyword: string) => {
-        console.log(" not use efffect searchQuery: ", searchQuery);
 
         keyword.trim();
         setSearchQuery(keyword);

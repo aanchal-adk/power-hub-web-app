@@ -16,7 +16,7 @@ const Home = () => {
 
   const fetchData = async (params: GetParams) => {
     try {
-      const response = await axios.get('http://localhost:5001/batteries',{params});
+      const response = await axios.get(process.env.API_URL + '/batteries',{params});
       setPowerHubData(response?.data);
   
     } catch (err) {

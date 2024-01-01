@@ -50,7 +50,7 @@ const AddBattery:React.FC<AddBatteryProps> = ({onFilter}) => {
 
     const saveBatteryData = async () => {
         try {
-          await axios.post('http://localhost:5001/batteries', [{
+          await axios.post(process.env.API_URL + '/batteries', [{
             name,
             postalCode,
             capacity
